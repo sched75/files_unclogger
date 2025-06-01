@@ -9,8 +9,9 @@ Développer une application Windows autonome qui automatise l'organisation des f
 #### 1.2 Proposition de Valeur
 - **Automatisation intelligente** : Classification IA basée sur le contenu et le contexte
 - **Flexibilité maximale** : 8 templates d'organisation adaptés à tous les besoins
+- **Personnalisation avancée** : Création de topics et projets personnalisés
 - **Apprentissage continu** : Le système s'améliore avec chaque utilisation
-- **Intégrité garantie** : Préservation des structures projet (Git, code source)
+- **Organisation hybride** : Association flexible entre topics, projets et templates
 
 ### 2. FONCTIONNALITÉS PRINCIPALES
 
@@ -73,159 +74,331 @@ Développer une application Windows autonome qui automatise l'organisation des f
 | 7 | **Statut/Domaine/Projet** | `/{statut}/{domaine}/{projet}/` | Gestion avancée avec statut |
 | 8 | **Statut/Domaine/Projet/Phase** | `/{statut}/{domaine}/{projet}/{phase}/` | Workflow complet de projet |
 
-#### 2.4 Interface Utilisateur
+#### 2.4 Gestion des Topics et Projets
 
-##### Interface Graphique (PyQt6)
+##### Système de Topics Personnalisés
+- **Définition de topics** : L'utilisateur peut créer une hiérarchie de sujets
+  - Exemple : Comptabilité > Point Cash
+  - Exemple : Marketing > Campagnes > 2024
+  - Exemple : RH > Recrutement > Candidatures
+  
+- **Association topic-template** : Chaque topic peut avoir son propre mode d'organisation
+  - Topic "Comptabilité/Point Cash" → Template "Année/Mois"
+  - Topic "Marketing/Campagnes" → Template "Domaine/Projets"
+  - Topic "RH/Contrats" → Template "Année/Type"
+
+- **Attribution manuelle** : L'utilisateur peut à tout moment :
+  - Assigner un fichier à un topic spécifique
+  - Modifier l'association fichier-topic suggérée par l'IA
+  - Créer de nouveaux topics à la volée
+
+##### Gestion des Projets
+- **Liste de projets personnalisée** : Création et gestion comme les topics
+- **Hiérarchie flexible** : Projets principaux et sous-projets
+- **Statuts personnalisables** : Au-delà des 4 statuts par défaut
+
+##### Configuration des Répertoires Racine
+- **Par topic** : Chaque topic peut avoir son répertoire de base
+  - Comptabilité → D:\Documents\Finance\
+  - Marketing → E:\Projets\Marketing\
+  - RH → D:\Confidentiel\RH\
+
+- **Par projet** : Répertoires dédiés par projet
+  - Projet ClientA → F:\Clients\ClientA\
+  - Projet Interne → D:\Projets\Internes\
+
+- **Héritage intelligent** : Les sous-topics/sous-projets héritent du répertoire parent sauf configuration contraire
+
+#### 2.5 Interface Utilisateur
+
+##### Interface Graphique
 - **Tableau de bord principal**
   - Vue d'ensemble des fichiers à organiser
   - Statistiques en temps réel
   - Barre de progression détaillée
 
 - **Onglets fonctionnels**
-  1. **Fichiers détectés** : Liste avec classification IA
-  2. **Projets** : Gestion et association de fichiers
-  3. **Organisation** : Configuration et aperçu
-  4. **Historique** : Journal des actions avec annulation
+  1. **Fichiers détectés** : Liste avec classification IA et attribution manuelle
+  2. **Topics** : Création, édition et gestion des sujets
+  3. **Projets** : Gestion et association de fichiers
+  4. **Organisation** : Configuration et aperçu
+  5. **Historique** : Journal des actions avec annulation
 
-##### Workflow Interactif
+- **Panneau d'attribution rapide**
+  - Menu contextuel sur chaque fichier
+  - Attribution à un topic ou projet en 2 clics
+  - Suggestion de topics basée sur l'historique
+
+##### Workflow d'Attribution
 ```
-1. Sélection source → 2. Choix du mode → 3. Scan IA
-       ↓                                        ↓
-4. Validation/Correction ← 5. Aperçu organisation
-       ↓
-6. Exécution → 7. Rapport détaillé
+1. Scan des fichiers → 2. Suggestions IA (topics/projets)
+         ↓                          ↓
+3. Validation/Modification → 4. Attribution manuelle possible
+         ↓
+5. Application du template associé → 6. Organisation
 ```
 
-### 3. CARACTÉRISTIQUES TECHNIQUES
+### 3. CARACTÉRISTIQUES FONCTIONNELLES
 
-#### 3.1 Technologies Utilisées
-- **Langage principal** : Python 3.8+
-- **Interface graphique** : PyQt6
-- **IA/ML** : 
-  - Sentence Transformers
-  - spaCy (NLP)
-  - Tesseract OCR
-- **Système** :
-  - Watchdog (surveillance fichiers)
-  - GitPython (analyse dépôts)
-  - PyWin32 (intégration Windows)
+#### 3.1 Gestion Avancée des Topics
 
-#### 3.2 Performance et Scalabilité
-- Traitement jusqu'à 10 000 fichiers/minute
-- Utilisation mémoire optimisée (<500MB)
-- Mode batch pour grandes archives
-- Traitement asynchrone avec threads
+##### Création et Organisation
+- **Interface de gestion dédiée** : Arborescence visuelle des topics
+- **Hiérarchie illimitée** : Topics principaux et sous-topics
+- **Icônes et couleurs** : Personnalisation visuelle pour identification rapide
+- **Import/Export** : Partage de configurations entre utilisateurs
 
-#### 3.3 Sécurité et Intégrité
-- **Chiffrement** : AES-256 pour métadonnées sensibles
-- **Traitement local** : Aucune donnée envoyée en ligne
-- **Sauvegarde** : Historique complet des actions
-- **Annulation** : Rollback possible de toute opération
+##### Exemples de Hiérarchies Topics
+```
+Finance/
+├── Comptabilité/
+│   ├── Point Cash
+│   ├── Bilans Mensuels
+│   └── Factures Fournisseurs
+├── Budget/
+│   ├── Prévisionnel
+│   └── Réalisé
+└── Investissements/
+
+Clients/
+├── Grands Comptes/
+│   ├── ClientA
+│   └── ClientB
+└── PME/
+    ├── Secteur Tech
+    └── Secteur Service
+```
+
+##### Association Topic-Template-Répertoire
+| Topic | Template Associé | Répertoire Racine |
+|-------|-----------------|-------------------|
+| Comptabilité/Point Cash | Année/Mois | D:\Finance\Comptabilité\ |
+| Marketing/Campagnes | Domaine/Projets | E:\Marketing\Campagnes\ |
+| RH/Contrats | Année/Type | D:\RH\Documentation\ |
+| Clients/Grands Comptes | Statut/Domaine/Projet | F:\Clients\Premium\ |
+
+#### 3.2 Système d'Attribution Intelligent
+
+##### Attribution Manuelle
+- **Glisser-déposer** : Vers un topic ou projet dans l'interface
+- **Menu contextuel** : Clic droit → "Attribuer à..."
+- **Raccourcis clavier** : Attribution rapide aux topics favoris
+- **Multi-sélection** : Attribution en masse de fichiers similaires
+
+##### Attribution Assistée par IA
+- **Suggestions contextuelles** : Basées sur le nom et le contenu
+- **Apprentissage** : Mémorisation des attributions manuelles
+- **Règles personnalisées** : Création de règles d'attribution automatique
+- **Score de confiance** : Indication de la pertinence de la suggestion
+
+#### 3.3 Configuration des Répertoires
+
+##### Paramètres par Topic
+- **Répertoire principal** : Base d'organisation pour le topic
+- **Sous-répertoires automatiques** : Création selon le template
+- **Permissions** : Gestion des accès si nécessaire
+- **Règles de nommage** : Personnalisation des conventions
+
+##### Paramètres par Projet
+- **Répertoire dédié** : Isolation complète du projet
+- **Structure type** : Modèle de sous-dossiers à créer
+- **Archivage** : Règles de déplacement pour projets terminés
+- **Synchronisation** : Options de backup automatique
 
 ### 4. CAS D'USAGE DÉTAILLÉS
 
-#### 4.1 Archivage Automatique Hebdomadaire
-**Contexte** : Service comptabilité avec rapports quotidiens
+#### 4.1 Organisation Comptable avec Topics
+**Contexte** : Service comptabilité avec multiples types de documents
 ```
-Entrée : Rapport_ventes_2024-01-15.xlsx
-Template : Année/Semaine/Type (#4)
-Sortie : /2024/Semaine_03/xlsx/Rapport_ventes_2024-01-15.xlsx
-```
+Scénario :
+1. Détection du fichier "Rapport_Tresorerie_Janvier_2024.xlsx"
+2. L'utilisateur l'attribue au topic "Comptabilité/Point Cash"
+3. Template associé automatiquement : "Année/Mois"
+4. Répertoire racine du topic : "D:\Finance\Comptabilité\Point_Cash\"
+5. Organisation finale : "D:\Finance\Comptabilité\Point_Cash\2024\01\Rapport_Tresorerie_Janvier_2024.xlsx"
 
-#### 4.2 Gestion de Projet Client
-**Contexte** : Agence marketing avec multiples clients
-```
-Détection : "Campagne_Nike_2024" dans plusieurs fichiers
-IA suggère : Domaine = Marketing, Statut = En cours
-Template : Statut/Domaine/Projet (#7)
-Organisation : /En cours/Marketing/Campagne_Nike_2024/
-Fichiers associés automatiquement :
-- Brief_Nike.docx
-- Maquettes_Nike_v3.psd
-- Budget_campagne_Nike.xlsx
+Fichiers similaires traités automatiquement :
+- Balance_Janvier_2024.xlsx → Même organisation
+- Rapprochement_Bancaire_Jan24.pdf → Même organisation
 ```
 
-#### 4.3 Organisation de Code Source
-**Contexte** : Développeur avec multiples projets Git
+#### 4.2 Gestion Multi-Projets avec Topics
+**Contexte** : Agence créative avec clients variés
 ```
-Détection : Dossier avec .git + package.json
-Classification : Projet Node.js, Phase = Code
-Template : Statut/Domaine/Projet/Phase (#8)
-Résultat : /En cours/Développement/API_Backend/Code/
-Note : Structure Git préservée intégralement
+Configuration initiale :
+- Topic "Clients/Grands Comptes/Nike" → Template "Statut/Domaine/Projet"
+- Topic "Clients/PME/StartupX" → Template "Projets"
+- Répertoires distincts pour chaque niveau
+
+Attribution en pratique :
+1. Brief_Nike_2024.docx → Topic "Clients/Grands Comptes/Nike"
+   Résultat : F:\Clients\Premium\En_cours\Marketing\Nike\Brief_Nike_2024.docx
+
+2. Devis_StartupX.xlsx → Topic "Clients/PME/StartupX"
+   Résultat : F:\Clients\PME\Projets\StartupX\Devis_StartupX.xlsx
 ```
 
-### 5. BÉNÉFICES UTILISATEUR
+#### 4.3 Workflow Hybride Topics et Projets
+**Contexte** : Département RH avec recrutement en cours
+```
+Configuration :
+- Topic "RH/Recrutement" avec template "Année/Type"
+- Projet "Recrutement_2024_Dev" rattaché au topic
 
-#### 5.1 Gains Quantifiables
-- **Temps** : Réduction de 90% du temps de classement
-- **Erreurs** : Diminution de 95% des erreurs de classement
-- **Productivité** : +2h/semaine récupérées par utilisateur
+Traitement :
+1. CV candidats → Attribution au projet spécifique
+2. Procédures RH → Attribution au topic général
+3. Organisation cohérente mais séparée des deux flux
 
-#### 5.2 Avantages Qualitatifs
-- Organisation cohérente et prévisible
-- Retrouvabilité immédiate des fichiers
-- Réduction du stress lié au désordre numérique
-- Apprentissage des bonnes pratiques d'organisation
+Résultats :
+- D:\RH\Projets\Recrutement_2024_Dev\CV\[fichiers CV]
+- D:\RH\Documentation\2024\Procédures\[fichiers procédures]
+```
 
-### 6. ROADMAP PRODUIT
+#### 4.4 Migration de Structure Existante
+**Contexte** : Entreprise souhaitant réorganiser 5 ans d'archives
+```
+Approche :
+1. Création de la hiérarchie de topics correspondant à l'organisation souhaitée
+2. Scan des archives existantes
+3. Attribution semi-automatique avec validation utilisateur
+4. Réorganisation progressive par lots
 
-#### Phase 1 - MVP (3 mois)
-- Interface graphique complète
-- 8 templates fonctionnels
-- Classification IA basique
-- Mode projet simple
+Exemple de mapping :
+- Ancien : "Divers\Compta\2023\fichier.xlsx"
+- Détection IA : Fichier comptable
+- Suggestion : Topic "Finance/Comptabilité/Archives"
+- Nouveau : "D:\Finance\Comptabilité\Archives\2023\01\fichier.xlsx"
+```
 
-#### Phase 2 - Amélioration IA (6 mois)
-- OCR multilingue intégré
-- Apprentissage profond
-- Détection avancée de contenu
-- API REST pour intégrations
+### 5. FONCTIONNALITÉS AVANCÉES
 
-#### Phase 3 - Fonctionnalités Avancées (9 mois)
-- Synchronisation cloud (OneDrive, Google Drive)
-- Mode collaboratif multi-utilisateurs
-- Plugins pour formats spécialisés
-- Automatisation par règles complexes
+#### 5.1 Gestion des Topics Favoris
+- **Topics épinglés** : Accès rapide aux plus utilisés
+- **Historique d'utilisation** : Suggestions basées sur la fréquence
+- **Topics récents** : Liste des 10 derniers utilisés
+- **Recherche rapide** : Filtrage instantané dans la liste
 
-#### Phase 4 - Entreprise (12 mois)
-- Version serveur centralisée
-- Gestion des permissions
-- Tableaux de bord analytiques
-- Conformité RGPD complète
+#### 5.2 Règles d'Attribution Automatique
+- **Par mots-clés** : "facture" → Topic "Comptabilité/Factures"
+- **Par expéditeur** : Emails de fournisseurX → Topic correspondant
+- **Par date** : Documents anciens → Topics d'archives
+- **Par taille** : Gros fichiers → Topics médias/archives
 
-### 7. MÉTRIQUES DE SUCCÈS
+#### 5.3 Modèles de Configuration
+- **Templates de topics** : Structures prédéfinies par secteur
+  - Pack Entreprise : Finance, RH, Commercial, Production
+  - Pack Créatif : Projets, Clients, Ressources, Archives
+  - Pack Personnel : Photos, Documents, Finances, Loisirs
+- **Personnalisation** : Adaptation des modèles aux besoins
+- **Partage** : Export/import entre utilisateurs ou postes
 
-#### 7.1 KPIs Techniques
-- Précision classification IA > 90%
-- Temps moyen d'organisation < 0.1s/fichier
-- Taux d'erreur < 0.1%
-- Disponibilité application > 99.9%
+#### 5.4 Tableau de Bord Topics
+- **Vue d'ensemble** : Nombre de fichiers par topic
+- **Activité récente** : Dernières attributions
+- **Espace utilisé** : Répartition du stockage
+- **Suggestions** : Topics peu utilisés à réviser
 
-#### 7.2 KPIs Utilisateur
-- Satisfaction utilisateur > 4.5/5
-- Taux d'adoption > 80% après formation
-- Réduction tickets support IT de 40%
-- ROI positif en < 3 mois
+### 6. BÉNÉFICES UTILISATEUR
 
-### 8. SUPPORT ET MAINTENANCE
+#### 6.1 Gains de Productivité
+- **Organisation personnalisée** : Adaptation parfaite au métier
+- **Flexibilité totale** : Topics et templates combinables
+- **Cohérence garantie** : Même logique pour tous les fichiers
+- **Retrouvabilité optimale** : Structure claire et logique
 
-#### 8.1 Documentation
-- Guide utilisateur illustré
-- Tutoriels vidéo par cas d'usage
-- FAQ dynamique
-- Base de connaissances searchable
+#### 6.2 Avantages Organisationnels
+- **Standardisation** : Mêmes topics pour toute l'équipe
+- **Scalabilité** : Ajout facile de nouveaux topics/projets
+- **Traçabilité** : Historique complet des attributions
+- **Conformité** : Respect des politiques de classement
 
-#### 8.2 Support Technique
-- Mises à jour automatiques
-- Diagnostic intégré
-- Export logs pour debug
-- Forum communautaire
+### 7. INTERFACE ET EXPÉRIENCE UTILISATEUR
 
-### 9. CONCLUSION
+#### 7.1 Écran de Gestion des Topics
+```
+[Barre d'outils : Nouveau Topic | Nouveau Sous-topic | Supprimer | Paramètres]
 
-Ce système d'organisation intelligente représente une avancée majeure dans la gestion des fichiers Windows. En combinant une IA évolutive, des templates flexibles et une interface intuitive, il transforme une tâche fastidieuse en processus automatisé et intelligent. L'investissement initial est rapidement rentabilisé par les gains de productivité et la réduction des erreurs.
+Arborescence des Topics          |  Détails du Topic Sélectionné
+--------------------------------|--------------------------------
+▼ Finance                       |  Nom : Comptabilité/Point Cash
+  ▼ Comptabilité               |  Template : Année/Mois
+    • Point Cash ←             |  Répertoire : D:\Finance\Compta\
+    • Bilans Mensuels          |  Créé le : 01/01/2024
+    • Factures                 |  Fichiers : 234
+  ▶ Budget                     |  Dernier accès : Aujourd'hui
+▶ Clients                      |  
+▶ RH                          |  [Modifier] [Statistiques]
+```
+
+#### 7.2 Interface d'Attribution
+- **Vue liste enrichie** : Aperçu fichier + topic suggéré
+- **Mode kanban** : Glisser-déposer vers colonnes topics
+- **Attribution rapide** : Touches 1-9 pour topics favoris
+- **Prévisualisation** : Voir où le fichier sera organisé
+
+#### 7.3 Workflow Type
+1. **Import** : Sélection du dossier source
+2. **Analyse** : Scan et suggestions IA
+3. **Révision** : Validation/modification des attributions
+4. **Configuration** : Vérification des répertoires cibles
+5. **Exécution** : Organisation avec rapport détaillé
+
+### 8. CONFIGURATION ET PERSONNALISATION
+
+#### 8.1 Paramètres Globaux
+- **Comportement par défaut** : Topic pour fichiers non attribués
+- **Création automatique** : Nouveaux topics depuis l'IA
+- **Notifications** : Alertes pour actions importantes
+- **Langue** : Interface multilingue
+
+#### 8.2 Personnalisation par Utilisateur
+- **Profils** : Configuration par type d'utilisateur
+- **Raccourcis** : Personnalisation des touches rapides
+- **Affichage** : Choix des colonnes et informations
+- **Filtres** : Critères d'affichage personnalisés
+
+### 9. SCÉNARIOS D'UTILISATION AVANCÉS
+
+#### 9.1 Entreprise Multi-Services
+```
+Configuration :
+- 50 topics organisés par département
+- 200 projets actifs
+- 10 utilisateurs avec profils différents
+
+Utilisation :
+- Chaque service a ses topics avec templates adaptés
+- Répertoires racine sur différents serveurs
+- Règles d'attribution par département
+```
+
+#### 9.2 Freelance Multi-Clients
+```
+Organisation :
+- 1 topic principal par client
+- Sous-topics par type de livrable
+- Templates différents selon la mission
+- Archives automatiques après facturation
+```
+
+#### 9.3 Usage Personnel Avancé
+```
+Structure :
+- Topics pour vie privée/professionnelle
+- Projets pour événements (vacances, déménagement)
+- Templates adaptés (photos par date, documents par type)
+- Synchronisation avec cloud personnel
+```
+
+### 10. CONCLUSION
+
+Ce système d'organisation intelligente représente une solution complète et flexible pour la gestion des fichiers Windows. La combinaison unique de topics personnalisables, de templates d'organisation variés et d'intelligence artificielle offre une expérience utilisateur sans précédent. 
+
+La possibilité d'attribuer manuellement chaque fichier à un topic spécifique, tout en bénéficiant de suggestions intelligentes, garantit une organisation parfaitement adaptée aux besoins de chaque utilisateur. L'association flexible entre topics, templates et répertoires racine permet de créer un système de classement véritablement sur mesure.
+
+Que ce soit pour un usage personnel, professionnel ou en entreprise, cette solution transforme la corvée du classement de fichiers en un processus simple, rapide et intelligent.
 
 ---
 
-*Document version 2.0 - Dernière mise à jour : Juin 2025*
+*Document version 2.1 - Spécification Fonctionnelle - Juin 2025*

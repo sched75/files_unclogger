@@ -247,19 +247,14 @@ Suggestions IA et assignations utilisateur :
 - Video_spot_TV_SB_final.mp4 -> Projet: Campagne_SuperBoisson_2024, Phase: Production Média, Domaine: Marketing, Statut: Terminé
 
 Organisation Résultante (exemple) :
-/En cours/Marketing/Campagne_SuperBoisson_2024/
+/En cours/Marketing/2024/Campagne_SuperBoisson/
     |_Briefing/
     |   |_Brief_SuperBoisson.docx
+    |   |_Budget_campagne_SB.xlsx
     |_Création/
-        |_Maquettes_SB_v3.psd
-/En cours/Finance/Campagne_SuperBoisson_2024/
-    |_Briefing/
-        |_Budget_campagne_SB.xlsx
-/Terminé/Juridique/Campagne_SuperBoisson_2024/
+    |   |_Maquettes_SB_v3.psd
     |_Production Média/
         |_Contrat_Influenceur_SB.pdf
-/Terminé/Marketing/Campagne_SuperBoisson_2024/
-    |_Production Média/
         |_Video_spot_TV_SB_final.mp4
 ```
 

@@ -285,10 +285,11 @@ Fichiers en entrée (métadonnées extraites) :
 
 Résultat :
 /Musique/
-    |_The Ways/
-    |   |_Open Road_(2023)/
-    |       |_01 - Sunrise.mp3
-    |       |_02 - Desert Wind.mp3
+    |_Independant
+    |   |_The Ways/
+    |   |   |_Open Road_(2023)/
+    |   |       |_01 - Sunrise.mp3
+    |   |       |_02 - Desert Wind.mp3
     |_Solo Artist/
         |_My Journey_(2022)/
             |_01 - The Path.flac
